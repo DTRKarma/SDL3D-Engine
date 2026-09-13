@@ -1,19 +1,21 @@
 NAME = 3d_project
 FILES = main.c
-OBJ = $(FILES:.c=.o)
+OBJS = $(FILES:.c=.o)
 
-FLAGS = -Wextra -Werror -Wall
+CC = cc
+CFLAGS = -Wextra -Werror -Wall -03 'pkg-config --cflags sdl3' -I include
+LIBS = 'pkg-config --cflags sdl3' -lm
 
 all : $(NAME)
 
-$(NAME) : $(OBJ)
-	cc $(FLAGS) $(OBJ) -o $(NAME) $(shell pkg-config --cflags --libs sdl3)
+$(NAME) : $(OBJS)
+	$(CC) $(OBJS) -o $(NAME) $(LIBS)
 
 %.o : %.c
 	cc $(FLAGS) -c $< -o $@
 
 clean :
-	rm -f $(OBJ)
+	rm -f $(OBJS)
 
 fclean : clean
 	rm -f $(NAME)
