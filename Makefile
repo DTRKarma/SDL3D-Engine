@@ -3,8 +3,8 @@ FILES = main.c
 OBJS = $(FILES:.c=.o)
 
 CC = cc
-CFLAGS = -Wextra -Werror -Wall -03 'pkg-config --cflags sdl3' -I include
-LIBS = 'pkg-config --cflags sdl3' -lm
+CFLAGS = -Wextra -Werror -Wall -O3 $(shell pkg-config --cflags sdl3) -I includes
+LIBS = $(shell pkg-config --libs sdl3) -lm
 
 all : $(NAME)
 
@@ -12,7 +12,7 @@ $(NAME) : $(OBJS)
 	$(CC) $(OBJS) -o $(NAME) $(LIBS)
 
 %.o : %.c
-	cc $(FLAGS) -c $< -o $@
+	cc $(CFLAGS) -c $< -o $@
 
 clean :
 	rm -f $(OBJS)
