@@ -1,4 +1,4 @@
-NAME = 3d_project
+NAME = SDL3D
 FILES = main.c
 OBJS = $(FILES:.c=.o)
 
@@ -8,14 +8,14 @@ LIBS = $(shell pkg-config --libs sdl3) -lm
 
 all : $(NAME)
 
-$(NAME) : $(OBJS)
-	$(CC) $(OBJS) -o $(NAME) $(LIBS)
+$(NAME) : objects/$(OBJS)
+	$(CC) objects/$(OBJS) -o $(NAME) $(LIBS)
 
-%.o : %.c
+objects/%.o : src/%.c
 	cc $(CFLAGS) -c $< -o $@
 
 clean :
-	rm -f $(OBJS)
+	rm -f objects/$(OBJS)
 
 fclean : clean
 	rm -f $(NAME)
