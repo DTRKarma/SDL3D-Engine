@@ -5,14 +5,14 @@
 #include <string.h>
 #include <stdio.h>
 
-#define WINDOW_HEIGHT 450
+#define WINDOW_HEIGHT 500
 #define WINDOW_WIDTH 800
 #define WINDOW_TOTAL_PIXELS (WINDOW_WIDTH * WINDOW_HEIGHT)
+#define WINDOW_SIZE_NUMBER (WINDOW_TOTAL_PIXELS * sizeof(uint32_t))
 
-void	color_buffer(uint32_t **buffer, uint32_t color)
+void	clear_buffer(uint32_t *buffer)
 {
-	for (int i = 0; i < WINDOW_TOTAL_PIXELS; i++)
-		*buffer[i] = color;
+	memset(buffer, 0, WINDOW_SIZE_NUMBER);
 }
 
 int	main(void) 
@@ -58,12 +58,14 @@ int	main(void)
 
         SDL_RenderClear(renderer);
 
-	color_buffer(&buffer, 0xFF0000FF);
+	clear_buffer(buffer);
 
     	SDL_UpdateTexture(texture, NULL, buffer, WINDOW_WIDTH * sizeof(uint32_t));
 	SDL_RenderTexture(renderer, texture, NULL, NULL);
         
 	SDL_RenderPresent(renderer);
+
+	SDL_Delay(16);
     }
 
     SDL_DestroyRenderer(renderer);
